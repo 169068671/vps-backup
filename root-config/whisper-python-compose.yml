@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  whisper:
+    image: python:3.10-slim
+    container_name: whisper-python
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      - MODEL_SIZE=small
+      - LANGUAGE=auto
+      - NUM_THREADS=4
+    volumes:
+      - ./videos:/videos
+      - ./transcripts:/transcripts
+      - ./models:/root/.cache/huggingface
+    command: >
+      sh -c "
+      pip install -i https://pypi.tuna.tsinghua.edu.cn/simple faster-whisper &&
+      pip install -i https://pypi.tuna.tsinghua.edu.cn/simple yt-dlp &&
+      pip install -i https://pypi.tuna.tsinghua.edu.cn/simple flask &&
+      echo 'Whisper 已安装' &&
+      tail -f /dev/null
+      "
+    ports:
+      - "5000:5000"
+    networks:
+      - whisper-net
+
+  # Whisper Web 界面
+  whisper-web:
+    image: python:3.10-slim
+    container_name: whisper-web-ui
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      - FLASK_APP=web
+      - VIDEO_DIR=/videos
+      - TRANSCRIPT_DIR=/transcripts
+    volumes:
+      - ./videos:/videos
+      - ./transcripts:/transcripts
+      - ./whisper-web:/app/whisper-web
+    command: >
+      sh -c "
+      pip install -i https://pypi.tuna.tsinghua.edu.cn/simple flask &&
+      pip install -i https://pypi.tuna.tsinghua.edu.cn/simple yt-dlp &&
+      pip install -i https://pypi.tuna.tsinghua.edu.cn/simple faster-whisper &&
+      python web.py
+      "
+    ports:
+      - "8082:8082"
+    depends_on:
+      - whisper
+    networks:
+      - whisper-net
+
+networks:
+  whisper-net:
+    driver: bridge

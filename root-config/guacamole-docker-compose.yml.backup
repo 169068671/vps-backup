@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  # MySQL 数据库
+  mysql:
+    image: mysql:8.0
+    container_name: guacamole-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_USER: guacamole_user
+      MYSQL_PASSWORD: guacamole_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - guacamole-net
+
+  # Guacamole Daemon (guacd)
+  guacd:
+    image: guacamole/guacd:latest
+    container_name: guacamole-guacd
+    restart: always
+    networks:
+      - guacamole-net
+
+  # Guacamole Web 应用
+  guacamole:
+    image: guacamole/guacamole:latest
+    container_name: guacamole-web
+    restart: always
+    depends_on:
+      - guacd
+      - mysql
+    environment:
+      GUACD_HOSTNAME: guacd
+      MYSQL_HOSTNAME: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_USER: guacamole_user
+      MYSQL_PASSWORD: guacamole_password
+    ports:
+      - "8081:8080"
+    networks:
+      - guacamole-net
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  guacamole-net:
+    driver: bridge

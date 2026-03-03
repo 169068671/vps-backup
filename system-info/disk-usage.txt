@@ -1,0 +1,10 @@
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           794M  1.4M  793M   1% /run
+/dev/sda1        97G   16G   82G  16% /
+tmpfs           3.9G     0  3.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda15      105M  6.1M   99M   6% /boot/efi
+tmpfs           794M   36K  794M   1% /run/user/0
+overlay          97G   16G   82G  16% /var/lib/docker/rootfs/overlayfs/0f98c6c549a9fd017a63717a92f02da4a006761f9bed0c7b23e6c9525cad64f1
+overlay          97G   16G   82G  16% /var/lib/docker/rootfs/overlayfs/a96671baca9a067baabe9114a33e435f814258b29d42e3eab42a1e0ef464ef89
+overlay          97G   16G   82G  16% /var/lib/docker/rootfs/overlayfs/e947a323109b4291994d040f80d9b91f60343e10ff8584af0b88be9bb76f569f

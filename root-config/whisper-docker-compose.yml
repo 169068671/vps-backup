@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  whisper:
+    image: guillaumekln/faster-whisper-dockerized:cpu-latest
+    container_name: whisper-faster
+    restart: unless-stopped
+    environment:
+      - ASR_MODEL=Systran/faster-whisper-small
+      - ASR_ENGINE=faster_whisper
+    volumes:
+      - ./videos:/videos
+      - ./transcripts:/transcripts
+      - ./models:/root/.cache/huggingface
+    ports:
+      - "9000:9000"
+    networks:
+      - whisper-net
+
+networks:
+  whisper-net:
+    driver: bridge

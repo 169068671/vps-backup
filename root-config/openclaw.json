@@ -1,0 +1,14 @@
+{
+  "gateway": {
+    "token": "70877df6ac5df1e7453e30027403f0e4da68cbe00da01748",
+    "port": 18789,
+    "bind": "loopback"
+  },
+  "channels": {
+    "dingtalk-connector": {
+      "appKey": "dingyscopnptfxm4hg8q",
+      "appSecret": "Nrh8Y7DlzCTXbkxnZEucht4sipI3iy8-LHKykYHvwjf4zM4H9zFDjRI0FKY1IVQd",
+      "targetUserId": "193200103629107416"
+    }
+  }
+}

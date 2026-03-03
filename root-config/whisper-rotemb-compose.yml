@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  whisper:
+    image: $IMAGE
+    container_name: whisper-rotemb
+    restart: unless-stopped
+    environment:
+      - ASR_MODEL=${MODEL_NAME:-Systran/faster-whisper-small}
+      - ASR_ENGINE=openai-whisper
+      - WHISPER_MODEL_SIZE=${MODEL_SIZE:-small}
+      - WHISPER_LANGUAGE=${LANGUAGE:-auto}
+      - WHISPER_TASK=${TASK:-transcribe}
+      - WHISPER_THREADS=4
+    volumes:
+      - ./videos:/videos
+      - ./transcripts:/transcripts
+      - ./models:/root/.cache
+    ports:
+      - "9000:9000"
+    networks:
+      - whisper-net
+
+networks:
+  whisper-net:
+    driver: bridge

@@ -1,0 +1,37 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/root/.openclaw/workspace"
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "all",
+    "auth": {
+      "mode": "token",
+      "token": "20e110256c06ea9aff13f90b6143874c2c7fb90bc5fc5207"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "dingtalk-connector": {
+        "enabled": true
+      }
+    }
+  },
+  "channels": {
+    "dingtalk-connector": {
+      "enabled": true,
+      "clientId": "dingyscopnptfxm4hg8q",
+      "clientSecret": "Nrh8Y7DlzCTXbkxnZEucht4sipI3iy8-LHKykYHvwjf4zM4H9zFDjRI0FKY1IVQd",
+      "gatewayToken": "20e110256c06ea9aff13f90b6143874c2c7fb90bc5fc5207"
+    }
+  }
+}

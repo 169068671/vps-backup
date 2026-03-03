@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  whisper:
+    image: python:3.10-slim
+    container_name: whisper-faster
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      - MODEL_SIZE=small
+      - LANGUAGE=auto
+      - NUM_THREADS=4
+    volumes:
+      - ./videos:/app/videos
+      - ./transcripts:/app/transcripts
+      - ./models:/root/.cache/huggingface
+    command: >
+      sh -c "
+      pip install -i https://pypi.tuna.tsinghua.edu.cn/simple faster-whisper &&
+      pip install -i https://pypi.tuna.tsinghua.edu.cn/simple yt-dlp &&
+      echo 'Whisper faster-whisper 已安装' &&
+      echo '可以开始转录了'
+      tail -f /dev/null
+      "
+    networks:
+      - whisper-net
+
+networks:
+  whisper-net:
+    driver: bridge
